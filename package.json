@@ -1,0 +1,11 @@
+{
+  "name": "koa-twig",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:jean-smaug/koa-twig.git",
+  "author": "Maxime BLANC <maxime.blanc@bedrockstreaming.com>",
+  "license": "MIT",
+  "dependencies": {
+    "twig": "^1.15.2"
+  }
+}
