@@ -28,6 +28,7 @@ app.use(
   koaTwig({
     views: `${__dirname}/views`,
     extension: "html", // default: "twig"
+    error: "error", // default: "404"
     data: { jean: "smaug" },
   })
 );
