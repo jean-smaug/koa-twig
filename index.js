@@ -22,12 +22,18 @@ const twigMiddleware = (config) => async (ctx, next) => {
   const errorView = config.error || ctx.status;
   const defaultData = config.data || {};
 
-  function render(file, data = {}) {
+  async function render(file, data = {}) {
     if (!file) {
       throw new Error("`file` is required in render");
     }
 
-    return renderFile(`${config.views}/${file}.${extension}`, {
+    const viewPath = `${config.views}/${file}.${extension}`;
+
+    if (!(await asyncExists(viewPath))) {
+      throw new Error("The view does not exist");
+    }
+
+    return renderFile(viewPath, {
       ...defaultData,
       ...data,
     });
@@ -41,7 +47,7 @@ const twigMiddleware = (config) => async (ctx, next) => {
   try {
     const errorViewCompletePath = `${config.views}/${errorView}.${extension}`;
 
-    if (ctx.status === 404 && asyncExists(errorViewCompletePath)) {
+    if (ctx.status === 404 && (await asyncExists(errorViewCompletePath))) {
       ctx.body = await render(errorViewCompletePath);
     }
   } catch (error) {}
