@@ -7,6 +7,7 @@ const renderFile = util.promisify(twig.renderFile);
  * Give the ability to use Twig template engine in Koa
  * @param {object} config
  * @param {string} config.views - the views folder path
+ * @param {object} config.error - the name of the error view, default: 404
  * @param {object} config.data - the data to pass to each view
  * @param {object} config.extension - the data to pass to each view
  */
@@ -22,6 +23,14 @@ const twigMiddleware = (config) => async (ctx, next) => {
   ctx.render = render;
 
   await next();
+
+  try {
+    if (ctx.status === 404) {
+      ctx.body = await render(
+        `${config.views}/${config.error || "404"}.${config.extension || "twig"}`
+      );
+    }
+  } catch (error) {}
 };
 
 module.exports = twigMiddleware;
