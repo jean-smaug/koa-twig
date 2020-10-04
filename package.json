@@ -5,7 +5,14 @@
   "repository": "git@github.com:jean-smaug/koa-twig.git",
   "author": "Maxime BLANC <maxime.blanc@bedrockstreaming.com>",
   "license": "MIT",
+  "scripts": {
+    "demo": "nodemon --config nodemon.json demo/server.js"
+  },
   "dependencies": {
     "twig": "^1.15.2"
+  },
+  "devDependencies": {
+    "koa": "2.13.0",
+    "nodemon": "2.0.4"
   }
 }
