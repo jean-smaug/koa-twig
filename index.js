@@ -24,10 +24,6 @@ const twigMiddleware = (config) => async (ctx, next) => {
 
   await next();
 
-  console.log(
-    `${config.views}/${config.error || "404"}.${config.extension || "twig"}`
-  );
-
   try {
     if (ctx.status === 404) {
       ctx.body = await render(
