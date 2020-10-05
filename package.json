@@ -5,7 +5,7 @@
   "repository": "git@github.com:jean-smaug/koa-twig.git",
   "author": "Maxime BLANC <maximeblanc.dev@gmail.com>",
   "license": "MIT",
-  "keywords": ['koa', 'twig'],
+  "keywords": ["koa", "twig"],
   "repository": {
     "type": "git",
     "url": "https://github.com/jean-smaug/koa-twig.git"
