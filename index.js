@@ -53,7 +53,10 @@ const twigMiddleware = (config) => async (ctx, next) => {
     if ((ctx.status === 404 || ctx.status === 500) && doesErrorViewExists) {
       ctx.body = await render(errorView);
     }
-  } catch (error) {}
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = error.message;
+  }
 };
 
 module.exports = twigMiddleware;
