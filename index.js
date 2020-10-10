@@ -19,7 +19,6 @@ const twigMiddleware = (config) => async (ctx, next) => {
   }
 
   const extension = config.extension || "twig";
-  const errorView = config.error || ctx.status;
   const defaultData = config.data || {};
 
   async function render(file, data = {}) {
@@ -45,10 +44,14 @@ const twigMiddleware = (config) => async (ctx, next) => {
   await next();
 
   try {
-    const errorViewCompletePath = `${config.views}/${errorView}.${extension}`;
+    const errorView = config.error || ctx.status;
 
-    if (ctx.status === 404 && (await asyncExists(errorViewCompletePath))) {
-      ctx.body = await render(errorViewCompletePath);
+    const doesErrorViewExists = await asyncExists(
+      `${config.views}/${errorView}.${extension}`
+    );
+
+    if ((ctx.status === 404 || ctx.status === 500) && doesErrorViewExists) {
+      ctx.body = await render(errorView);
     }
   } catch (error) {}
 };
