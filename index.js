@@ -9,7 +9,7 @@ const asyncExists = util.promisify(fs.exists);
  * Give the ability to use Twig template engine in Koa
  * @param {object} config
  * @param {string} config.views - the views folder path
- * @param {object} config.error - the name of the error view, default: 404
+ * @param {object} config.errors - errors to filenam map
  * @param {object} config.data - the data to pass to each view
  * @param {object} config.extension - the data to pass to each view
  */
