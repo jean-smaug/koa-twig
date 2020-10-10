@@ -29,9 +29,23 @@ app.use(
     views: `${__dirname}/views`,
     extension: "html", // default: "twig"
     error: "error", // default: "404"
-    data: { jean: "smaug" },
+    data: { NODE_ENV: process.env.NODE_ENV }, // Data shared accross all views
   })
 );
+
+app.use(async (ctx) => {
+  switch (ctx.path) {
+    case "/":
+      ctx.body = await ctx.render("home");
+      break;
+
+    case "/profile":
+      ctx.body = await ctx.render("profile", {
+        user: { firstName: "jean", lastName: "smaug" },
+      });
+      break;
+  }
+});
 
 app.listen(8080);
 ```
