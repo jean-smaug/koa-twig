@@ -16,7 +16,7 @@ npm i --save-dev --exact koa-twig
 
 ## Usage
 
-Under the hood, this module is using the [twig](https://github.com/twigjs/twig.js) module. So you can pass all options that are accepted by this module.
+Under the hood, this module is using the [twig](https://github.com/twigjs/twig.js) module.
 
 ```js
 const Koa = require("koa");
@@ -28,7 +28,7 @@ app.use(
   koaTwig({
     views: `${__dirname}/views`,
     extension: "html", // default: "twig"
-    errors: { 404: "error" }, // default: "404"
+    errors: { 404: "error" }, // by default you can create STATUS_CODE.twig files
     data: { NODE_ENV: process.env.NODE_ENV }, // Data shared accross all views
   })
 );
