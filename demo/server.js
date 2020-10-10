@@ -10,6 +10,9 @@ app.use(
     views: `${__dirname}/views`,
     extension: "html", // default: "twig"
     data: { jean: "smaug", NODE_ENV },
+    errors: {
+      404: "not-found",
+    },
   })
 );
 

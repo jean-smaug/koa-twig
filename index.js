@@ -44,13 +44,16 @@ const twigMiddleware = (config) => async (ctx, next) => {
   await next();
 
   try {
-    const errorView = config.error || ctx.status;
+    const errorView = config.errors[ctx.status] || ctx.status;
 
     const doesErrorViewExists = await asyncExists(
       `${config.views}/${errorView}.${extension}`
     );
 
-    if ((ctx.status === 404 || ctx.status === 500) && doesErrorViewExists) {
+    if (
+      (ctx.status.startsWith(4) || ctx.status.startsWith(5)) &&
+      doesErrorViewExists
+    ) {
       ctx.body = await render(errorView);
     }
   } catch (error) {

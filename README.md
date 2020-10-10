@@ -28,7 +28,7 @@ app.use(
   koaTwig({
     views: `${__dirname}/views`,
     extension: "html", // default: "twig"
-    error: "error", // default: "404"
+    errors: { 404: "error" }, // default: "404"
     data: { NODE_ENV: process.env.NODE_ENV }, // Data shared accross all views
   })
 );
