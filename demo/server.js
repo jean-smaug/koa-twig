@@ -3,11 +3,13 @@ const koaTwig = require("../index");
 
 const app = new Koa();
 
+const { NODE_ENV } = process.env;
+
 app.use(
   koaTwig({
     views: `${__dirname}/views`,
     extension: "html", // default: "twig"
-    data: { jean: "smaug" },
+    data: { jean: "smaug", NODE_ENV },
   })
 );
 
@@ -23,6 +25,10 @@ app.use(async (ctx) => {
 
     case "/profile":
       ctx.body = await ctx.render("profile");
+      break;
+
+    case "/500":
+      ctx.status = 500;
       break;
   }
 });

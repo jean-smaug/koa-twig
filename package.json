@@ -10,7 +10,7 @@
   "license": "MIT",
   "keywords": ["koa", "twig"],
   "scripts": {
-    "demo": "nodemon --config nodemon.json demo/server.js"
+    "demo": "NODE_ENV=demo nodemon --config nodemon.json demo/server.js"
   },
   "dependencies": {
     "twig": "^1.15.2"
