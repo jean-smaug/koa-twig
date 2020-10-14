@@ -17,7 +17,6 @@ const twigMiddleware = (config) => async (ctx, next) => {
   if (!config.views) {
     throw new Error("`views` is required in config");
   }
-  console.log("here 1");
 
   const extension = config.extension || "twig";
   const defaultData = config.data || {};
@@ -27,7 +26,6 @@ const twigMiddleware = (config) => async (ctx, next) => {
       throw new Error("`file` is required in render");
     }
 
-    console.log("here");
     const viewPath = `${config.views}/${file}.${extension}`;
 
     if (!(await asyncExists(viewPath))) {
