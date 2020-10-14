@@ -17,6 +17,7 @@ const twigMiddleware = (config) => async (ctx, next) => {
   if (!config.views) {
     throw new Error("`views` is required in config");
   }
+  console.log("here 1");
 
   const extension = config.extension || "twig";
   const defaultData = config.data || {};
@@ -26,6 +27,7 @@ const twigMiddleware = (config) => async (ctx, next) => {
       throw new Error("`file` is required in render");
     }
 
+    console.log("here");
     const viewPath = `${config.views}/${file}.${extension}`;
 
     if (!(await asyncExists(viewPath))) {
@@ -44,7 +46,8 @@ const twigMiddleware = (config) => async (ctx, next) => {
   await next();
 
   try {
-    const errorView = config.errors[ctx.status] || ctx.status;
+    const errorView =
+      (config.errors && config.errors[ctx.status]) || ctx.status;
 
     const doesErrorViewExists = await asyncExists(
       `${config.views}/${errorView}.${extension}`
@@ -58,7 +61,7 @@ const twigMiddleware = (config) => async (ctx, next) => {
     }
   } catch (error) {
     ctx.status = 500;
-    ctx.body = error.message;
+    ctx.body = error;
   }
 };
 
