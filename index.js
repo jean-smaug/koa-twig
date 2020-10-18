@@ -51,9 +51,13 @@ const twigMiddleware = (config) => async (ctx, next) => {
 
   if (config.errors === false) return;
 
-  if (typeof variable !== "undefined" && typeof config.errors !== "object") {
+  if (
+    (typeof config.errors !== "undefined" &&
+      typeof config.errors !== "object") ||
+    config.errors === null
+  ) {
     throw new Error(
-      "`errors` must be a mapping between an HTTP error and a filename"
+      `"errors" must be a mapping between an HTTP error and a filename, received ${config.errors}`
     );
   }
 
