@@ -43,11 +43,11 @@ app.use(
 app.use(async (ctx) => {
   switch (ctx.path) {
     case "/":
-      ctx.body = await ctx.render("home");
+      await ctx.render("home");
       break;
 
     case "/profile":
-      ctx.body = await ctx.render("profile", {
+      await ctx.render("profile", {
         user: { firstName: "jean", lastName: "smaug" },
       });
       break;
