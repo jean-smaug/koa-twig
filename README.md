@@ -14,9 +14,16 @@ yarn add -DE koa-twig
 npm i --save-dev --exact koa-twig
 ```
 
-## Usage
+## Config
 
-Under the hood, this module is using the [twig](https://github.com/twigjs/twig.js) module.
+- `views` string|required : the views folder path
+- `extension` string : the files extension you want to use, by default, it's `twig`
+- `errors` object|boolean : this optinal parameter allows you to customize the error handling. By default you can create `404.twig`, `500.twig`, every `STATUS_CODE.twig`. You can 
+- `data` object : data you want to share accross all views
+
+## Example
+
+Under the hood, this module is using the [twig](https://github.com/twigjs/twig.js) module. You can find an example inside the `demo` folder of the repo.
 
 ```js
 const Koa = require("koa");
@@ -27,8 +34,8 @@ const app = new Koa();
 app.use(
   koaTwig({
     views: `${__dirname}/views`,
-    extension: "html", // default: "twig"
-    errors: { 404: "error" }, // by default you can create STATUS_CODE.twig files
+    extension: "html",
+    errors: { 404: "not-found" }, // A 404 status code will render the file named `not-found`
     data: { NODE_ENV: process.env.NODE_ENV }, // Data shared accross all views
   })
 );
@@ -49,3 +56,4 @@ app.use(async (ctx) => {
 
 app.listen(8080);
 ```
+
