@@ -9,7 +9,7 @@ const asyncExists = util.promisify(fs.exists);
  * Give the ability to use Twig template engine in Koa
  * @param {object} config
  * @param {string} config.views - the views folder path
- * @param {object} config.errors - errors to filenam map
+ * @param {object|boolean} config.errors - errors to filenam map
  * @param {object} config.data - the data to pass to each view
  * @param {object} config.extension - the data to pass to each view
  */
@@ -48,6 +48,14 @@ const twigMiddleware = (config) => async (ctx, next) => {
   ctx.render = render;
 
   await next();
+
+  if (config.errors === false) return;
+
+  if (typeof variable !== "undefined" && typeof config.errors !== "object") {
+    throw new Error(
+      "`errors` must be a mapping between an HTTP error and a filename"
+    );
+  }
 
   try {
     const errorView =
