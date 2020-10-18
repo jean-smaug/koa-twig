@@ -70,10 +70,10 @@ const twigMiddleware = (config) => async (ctx, next) => {
     );
 
     if (
-      (String(ctx.status).startsWith(4) || String(ctx.status).startsWith(5)) &&
-      doesErrorViewExists
+      doesErrorViewExists &&
+      (String(ctx.status).startsWith(4) || String(ctx.status).startsWith(5))
     ) {
-      ctx.body = await render(errorView);
+      await render(errorView);
     }
   } catch (error) {
     ctx.status = 500;
