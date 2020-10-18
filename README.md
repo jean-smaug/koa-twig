@@ -18,7 +18,7 @@ npm i --save-dev --exact koa-twig
 
 - `views` string|required : the views folder path
 - `extension` string : the files extension you want to use, by default, it's `twig`
-- `errors` object|boolean : this optinal parameter allows you to customize the error handling. By default you can create `404.twig`, `500.twig`, every `STATUS_CODE.twig`. You can 
+- `errors` object|boolean : this optinal parameter allows you to customize the error handling. By default you can create `404.twig`, `500.twig`, every `STATUS_CODE.twig`. You can disable this behaviour by passing `false` to this option.
 - `data` object : data you want to share accross all views
 
 ## Example
@@ -56,4 +56,3 @@ app.use(async (ctx) => {
 
 app.listen(8080);
 ```
-
