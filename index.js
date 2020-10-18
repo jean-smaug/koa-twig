@@ -17,24 +17,28 @@ const twigMiddleware = (config) => async (ctx, next) => {
   if (!config.views) {
     throw new Error("`views` is required in config");
   }
-  console.log("here 1");
 
   const extension = config.extension || "twig";
   const defaultData = config.data || {};
 
-  async function render(file, data = {}) {
-    if (!file) {
-      throw new Error("`file` is required in render");
+  /**
+   * Render a twig template
+   * @param {string} view
+   * @param {object} data
+   */
+  async function render(view, data = {}) {
+    if (!view) {
+      throw new Error("`view` is required in render");
     }
 
-    console.log("here");
-    const viewPath = `${config.views}/${file}.${extension}`;
+    const viewPath = `${config.views}/${view}.${extension}`;
 
     if (!(await asyncExists(viewPath))) {
-      throw new Error("The view does not exist");
+      throw new Error("The `view` does not exist");
     }
 
-    return renderFile(viewPath, {
+    ctx.type = "text/html";
+    ctx.body = await renderFile(viewPath, {
       ...defaultData,
       ...data,
     });
