@@ -7,11 +7,11 @@ So I created this little lib.
 ## Installation
 
 ```bash
-yarn add -DE koa-twig
+yarn add -E koa-twig
 
 # OR
 
-npm i --save-dev --exact koa-twig
+npm i --exact koa-twig
 ```
 
 ## Config
