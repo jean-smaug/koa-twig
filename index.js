@@ -47,37 +47,43 @@ const twigMiddleware = (config) => async (ctx, next) => {
   ctx.response.render = render;
   ctx.render = render;
 
-  await next();
-
-  if (config.errors === false) return;
-
-  if (
-    (typeof config.errors !== "undefined" &&
-      typeof config.errors !== "object") ||
-    config.errors === null
-  ) {
-    throw new Error(
-      `"errors" must be a mapping between an HTTP error and a filename, received ${config.errors}`
-    );
-  }
-
   try {
-    const errorView =
-      (config.errors && config.errors[ctx.status]) || ctx.status;
-
-    const doesErrorViewExists = await asyncExists(
-      `${config.views}/${errorView}.${extension}`
-    );
+    await next();
+  } catch (error) {
+    if (config.errors === false) return;
 
     if (
-      doesErrorViewExists &&
-      (String(ctx.status).startsWith(4) || String(ctx.status).startsWith(5))
+      (typeof config.errors !== "undefined" &&
+        typeof config.errors !== "object") ||
+      config.errors === null
     ) {
-      await render(errorView);
+      throw new Error(
+        `"errors" must be a mapping between an HTTP error and a filename, received ${config.errors}`
+      );
     }
-  } catch (error) {
-    ctx.status = 500;
-    ctx.body = error;
+
+    try {
+      const errorView =
+        (config.errors && config.errors[ctx.status]) || ctx.status;
+
+      const doesErrorViewExists = await asyncExists(
+        `${config.views}/${errorView}.${extension}`
+      );
+
+      if (
+        doesErrorViewExists &&
+        (String(ctx.status).startsWith(4) || String(ctx.status).startsWith(5))
+      ) {
+        await render(errorView, { error });
+
+        return;
+      }
+
+      ctx.throw(error);
+    } catch (error) {
+      ctx.status = 500;
+      ctx.body = { error };
+    }
   }
 };
 
