@@ -51,6 +51,7 @@ const twigMiddleware = (config) => async (ctx, next) => {
   try {
     await next();
   } catch (error) {
+    ctx.status = 500;
     nextError = error;
   }
 
