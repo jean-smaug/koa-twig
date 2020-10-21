@@ -13,13 +13,15 @@
     "twig"
   ],
   "scripts": {
-    "demo": "NODE_ENV=demo nodemon --config nodemon.json demo/server.js"
+    "demo": "NODE_ENV=demo nodemon --config nodemon.json demo/server.js",
+    "demo:router": "NODE_ENV=demo nodemon --config nodemon.json demo/routerServer.js"
   },
   "dependencies": {
     "twig": "^1.15.2"
   },
   "devDependencies": {
     "koa": "2.13.0",
+    "koa-router": "9.4.0",
     "nodemon": "2.0.4"
   }
 }

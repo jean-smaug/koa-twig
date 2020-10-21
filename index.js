@@ -47,7 +47,13 @@ const twigMiddleware = (config) => async (ctx, next) => {
   ctx.response.render = render;
   ctx.render = render;
 
-  await next();
+  let nextError = {};
+  try {
+    await next();
+  } catch (error) {
+    ctx.status = 500;
+    nextError = error;
+  }
 
   if (config.errors === false) return;
 
@@ -73,11 +79,13 @@ const twigMiddleware = (config) => async (ctx, next) => {
       doesErrorViewExists &&
       (String(ctx.status).startsWith(4) || String(ctx.status).startsWith(5))
     ) {
-      await render(errorView);
+      await render(errorView, { error: nextError });
+
+      return;
     }
   } catch (error) {
     ctx.status = 500;
-    ctx.body = error;
+    ctx.body = { error };
   }
 };
 
