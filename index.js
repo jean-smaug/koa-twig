@@ -79,7 +79,7 @@ const twigMiddleware = (config) => async (ctx, next) => {
       doesErrorViewExists &&
       (String(ctx.status).startsWith(4) || String(ctx.status).startsWith(5))
     ) {
-      await render(errorView, { error: nextError, ...defaultData });
+      await render(errorView, { error: nextError });
 
       return;
     }

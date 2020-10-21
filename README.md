@@ -56,3 +56,24 @@ app.use(async (ctx) => {
 
 app.listen(8080);
 ```
+
+## Errors informations
+
+If you define a `500.twig` (or any other STATUS_CODE.twig file) you'll be able to get error informations : `name`, `message`, `stack`.
+
+```js
+app.use(async (ctx) => {
+  throw new Error("Smaug");
+});
+```
+
+```html
+<html>
+  ...
+  <body>
+    <span>{{ error.name }}</span>
+    <span>{{ error.message }}</span>
+    <span>{{ error.stack }}</span>
+  </body>
+</html>
+```
