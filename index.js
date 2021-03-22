@@ -12,6 +12,8 @@ const asyncExists = util.promisify(fs.exists);
  * @param {object|boolean} config.errors - errors to filenam map
  * @param {object} config.data - the data to pass to each view
  * @param {object} config.extension - the data to pass to each view
+ * @param {object} config.functions - the functions to add to Twig
+ * @param {object} config.filters - the filters to add to Twig
  */
 const twigMiddleware = (config) => async (ctx, next) => {
   if (!config.views) {
@@ -20,6 +22,18 @@ const twigMiddleware = (config) => async (ctx, next) => {
 
   const extension = config.extension || "twig";
   const defaultData = config.data || {};
+
+  if (config.functions) {
+    for (const key in config.functions) {
+      twig.extendFunction(key, config.functions[key]);
+    }
+  }
+
+  if (config.filters) {
+    for (const key in config.filters) {
+      twig.extendFilter(key, config.filters[key]);
+    }
+  }
 
   /**
    * Render a twig template

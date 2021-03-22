@@ -20,6 +20,8 @@ npm i --exact koa-twig
 - `extension` string : the files extension you want to use, by default, it's `twig`
 - `errors` object|boolean : this optinal parameter allows you to customize the error handling. By default you can create `404.twig`, `500.twig`, every `STATUS_CODE.twig`. You can disable this behaviour by passing `false` to this option.
 - `data` object : data you want to share accross all views
+- `functions` object : functions you want to use accross all views
+- `filters` object : filters you want to use accross all views
 
 ## Example
 
